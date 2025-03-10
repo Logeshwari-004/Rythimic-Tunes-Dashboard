@@ -1,0 +1,392 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #2E1A00; /* Warm dark brown background */
+  color: #EDE4D3; /* Soft cream text */
+  overflow-x: hidden; /* Prevent horizontal overflow at body level */
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px; /* Reduced from 180px to give more space to main-content */
+  background-color: #4A2C00; /* Warm dark brown for sidebar */
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid #6B3E00; /* Subtle warm border */
+}
+
+.sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #FFF7E6; /* Soft cream title */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #EDE4D3; /* Soft cream text */
+  text-decoration: none;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: #FF8C38; /* Warm orange for hover/active */
+  color: #FFF7E6;
+}
+
+.nav-link svg {
+  margin-right: 10px;
+}
+
+.main-content {
+  margin-left: 10px; /* Updated to match new sidebar width */
+  padding: 20px;
+  flex-grow: 1;
+  background-color: #2E1A00; /* Match body background */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  position: relative; /* Added for positioning the song bar */
+}
+
+.container {
+  max-width: 800px; /* Adjusted to fit 3 cards per row */
+  margin: 0 auto; /* Center the container */
+  width: 100%; /* Ensure full width within constraints */
+  overflow-x: hidden; /* Prevent overflow within container */
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns per row */
+  gap: 10px; /* Maintain minimal gap */
+  overflow-x: hidden; /* Prevent grid overflow */
+}
+
+.col {
+  width: 100%;
+}
+
+.song-card {
+  background-color: transparent; /* Transparent background */
+  border-radius: 10px;
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.song-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for hover */
+}
+
+.song-card.playing {
+  border: 2px solid #FF8C38; /* Warm orange glow for playing state */
+  box-shadow: 0 0 10px rgba(255, 140, 56, 0.5);
+}
+
+.card-body {
+  color: #EDE4D3; /* Soft cream text */
+}
+
+.card-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #FFF7E6; /* Soft cream for titles */
+}
+
+.card-text {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.song-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #FF8C38; /* Warm orange for play */
+  color: #FFF7E6;
+}
+
+.btn-primary:hover {
+  background-color: #E07B30; /* Darker orange on hover */
+}
+
+.btn-danger {
+  background-color: #D9534F; /* Warm red for favorited */
+  color: #FFF7E6;
+}
+
+.btn-outline-danger {
+  background-color: transparent;
+  border: 1px solid #D9534F;
+  color: #D9534F;
+}
+
+.btn-outline-danger:hover {
+  background-color: #D9534F;
+  color: #FFF7E6;
+}
+
+.btn-success {
+  background-color: #5CB85C; /* Soft green for playlist */
+  color: #FFF7E6;
+}
+
+.btn-outline-success {
+  background-color: transparent;
+  border: 1px solid #5CB85C;
+  color: #5CB85C;
+}
+
+.btn-outline-success:hover {
+  background-color: #5CB85C;
+  color: #FFF7E6;
+}
+
+.btn-secondary {
+  background-color: #8C5523; /* Warm brown for download */
+  color: #FFF7E6;
+}
+
+.btn-secondary:hover {
+  background-color: #6B3E00; /* Darker brown on hover */
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #6B3E00; /* Subtle warm border */
+  border-radius: 5px;
+  background-color: #3F2300; /* Slightly lighter warm brown input */
+  color: #EDE4D3;
+}
+.search-bar.full-width {
+  width: 100%; /* Ensures the search bar takes the full width of its container */
+  max-width: none; /* Overrides any max-width constraints */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #FF8C38; /* Warm orange focus */
+  box-shadow: 0 0 5px rgba(255, 140, 56, 0.5);
+}
+
+.search-bar::placeholder {
+  color: #BFA68A; /* Light warm placeholder */
+}
+
+.track-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.track-bar {
+  flex-grow: 1;
+  --webkit-appearance: none;
+  height: 5px;
+  background: #8C5523; /* Warm brown track */
+  border-radius: 5px;
+  outline: none;
+}
+
+.track-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #FF8C38; /* Warm orange thumb */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.track-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #FF8C38;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.track-time {
+  font-size: 12px;
+  color: #BFA68A; /* Lighter warm for time */
+}
+
+/* Styles for the current song bar (unchanged) */
+.current-song-bar {
+  position: fixed;
+  bottom: 0;
+  left: 290px; /* Match original sidebar width */
+  right: 0;
+  background-color: #4A2C00; /* Match sidebar color */
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #6B3E00;
+  z-index: 1000; /* Ensure it stays above other content */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.song-info {
+  display: flex;
+  flex-direction: column;
+  color: #EDE4D3;
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.song-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFF7E6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-singer {
+  font-size: 14px;
+  color: #BFA68A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.player-controls .btn {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.player-controls .btn-primary {
+  background-color: #FF8C38;
+  color: #FFF7E6;
+}
+
+.player-controls .btn-primary:hover {
+  background-color: #E07B30;
+}
+
+.player-controls .track-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.player-controls .track-bar {
+  flex-grow: 1;
+  --webkit-appearance: none;
+  height: 5px;
+  background: #8C5523;
+  border-radius: 5px;
+  outline: none;
+}
+
+.player-controls .track-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #FF8C38;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.player-controls .track-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #FF8C38;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.player-controls .track-time {
+  font-size: 12px;
+  color: #BFA68A;
+  flex-shrink: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  }
+
+  .current-song-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .player-controls {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .song-info {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
+
+  .sidebar {
+    width: 120px; /* Further reduced for very small screens */
+  }
+
+  .main-content {
+    margin-left: 120px; /* Updated to match new sidebar width */
+  }
+
+  .current-song-bar {
+    left: 120px; /* Updated to match new sidebar width */
+  }
+}
